@@ -22,4 +22,5 @@ It trains relatively slower on `Pubmed` dataset.
 python train.py
 ```
 
-
+# Acknowledgement
+Borrow GCN code from: https://github.com/dragen1860/GCN-PyTorch
