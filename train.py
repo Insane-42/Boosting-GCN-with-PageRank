@@ -8,15 +8,16 @@ from    data import load_data, preprocess_features, preprocess_adj
 from    model import GCN
 from    config import  args
 from    utils import masked_loss, masked_acc
+import  scipy.sparse as sp
 
-
-seed = 123
+seed = 12345
 np.random.seed(seed)
 torch.random.manual_seed(seed)
 
 
 # load data
 adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data(args.dataset)
+# print(np.array(adj))
 print('adj:', adj.shape)
 print('features:', features.shape)
 print('y:', y_train.shape, y_val.shape, y_test.shape)
@@ -26,7 +27,7 @@ print('mask:', train_mask.shape, val_mask.shape, test_mask.shape)
 features = preprocess_features(features) # [49216, 2], [49216], [2708, 1433]
 supports = preprocess_adj(adj)
 
-device = torch.device('cuda')
+device = torch.device('cpu')
 train_label = torch.from_numpy(y_train).long().to(device)
 num_classes = train_label.shape[1]
 train_label = train_label.argmax(dim=1)

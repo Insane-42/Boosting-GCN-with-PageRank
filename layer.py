@@ -41,7 +41,7 @@ class GraphConvolution(nn.Module):
         # convolve
         if not self.featureless: # if it has features x
             if self.is_sparse_inputs:
-                xw = torch.sparse.mm(x, self.weight)
+                xw = torch.sparse.mm(x.float(), self.weight)
             else:
                 xw = torch.mm(x, self.weight)
         else:

@@ -3,6 +3,8 @@ import  pickle as pkl
 import  networkx as nx
 import  scipy.sparse as sp
 from    scipy.sparse.linalg.eigen.arpack import eigsh
+from    pagerank import PageRank
+
 import  sys
 
 
@@ -139,11 +141,10 @@ def normalize_adj(adj):
 
 def preprocess_adj(adj):
     """Preprocessing of adjacency matrix for simple GCN model and conversion to tuple representation."""
-    adj_normalized = normalize_adj(adj + sp.eye(adj.shape[0]))
+    pagerank_matrix = np.diag(PageRank(np.array(adj.todense()))*adj.shape[0]*0.8)
+    adj_normalized = normalize_adj(adj + pagerank_matrix)
+    # adj_normalized = normalize_adj(adj + sp.eye(adj.shape[0]))
     return sparse_to_tuple(adj_normalized)
-
-
-
 
 
 def chebyshev_polynomials(adj, k):

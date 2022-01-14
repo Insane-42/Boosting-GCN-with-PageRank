@@ -10,7 +10,7 @@ class GCN(nn.Module):
 
     def __init__(self, input_dim, output_dim, num_features_nonzero):
         super(GCN, self).__init__()
-
+        
         self.input_dim = input_dim # 1433
         self.output_dim = output_dim
 
@@ -45,10 +45,11 @@ class GCN(nn.Module):
 
         loss = None
 
-        for p in layer.parameters():
-            if loss is None:
-                loss = p.pow(2).sum()
-            else:
-                loss += p.pow(2).sum()
+        for layer in self.layers:
+            for p in layer.parameters():
+                if loss is None:
+                    loss = p.pow(2).sum()
+                else:
+                    loss += p.pow(2).sum()
 
         return loss
